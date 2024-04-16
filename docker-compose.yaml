@@ -22,7 +22,7 @@ services:
     networks:
       - app-network
     environment:
-      DB_CONNECTION_STRING: postgres://postgres:docker@db:5432/movielist
+      DB_CONNECTION_STRING: postgres://postgres:docker@db:5432/storeDB
     depends_on:
       - db
 
@@ -34,7 +34,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
-      POSTGRES_DB: movielist
+      POSTGRES_DB: storeDB
     volumes:
       - ./db:/var/lib/postgresql/data
     networks:
