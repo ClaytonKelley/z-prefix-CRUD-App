@@ -11,7 +11,14 @@ exports.seed = async function(knex) {
       LastName: "walburg",
       UserName: 'walburger',
       Password: 'impossibleburger'
+    },
+    {
+      FirstName: 'testFirstName',
+      LastName: "testLastName",
+      UserName: 'test',
+      Password: 'test'
     }
+
 
   ]);
 };

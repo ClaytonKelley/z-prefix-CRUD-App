@@ -2,11 +2,11 @@
 FROM node:alpine
 
 # Set and create the working directory for this app
-WORKDIR /frontend
+WORKDIR /client/frontend
 
 # Copy this application's files from the current directory to the filesystem
 # of the container at /app
-COPY . /frontend
+COPY . /client/frontend
 
 # Make the container accept traffic on port 3000 at runtime from other
 # containers or the host if also published
