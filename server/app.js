@@ -25,6 +25,10 @@ app.get('/users', (req, res) => {
     .then((userData) => {
       res.status(200).send(userData)
     })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send({error: 'Server error', details: err.message});
+    });
 })
 
 app.get('/Items', (req, res) => {
@@ -33,6 +37,10 @@ app.get('/Items', (req, res) => {
     .then((userData) => {
       res.status(200).send(userData)
     })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send({error: 'Server error', details: err.message});
+    });
 })
 
 app.get('/Items/:userId', (req, res) => {
@@ -42,6 +50,10 @@ app.get('/Items/:userId', (req, res) => {
     .then((userData) => {
       res.status(200).send(userData)
     })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send({error: 'Server error', details: err.message});
+    });
 })
 
 app.post('/login', (req, res) => {
@@ -56,7 +68,7 @@ app.post('/login', (req, res) => {
     }
   })
   .catch((err) => {
-    console.error(err); // Log the error for debugging
+    console.error(err);
     res.status(500).send({error: 'Server error', details: err.message});
   });
 });
@@ -66,7 +78,17 @@ app.post('/create-account', (req, res) => {
   .insert(req.body)
   .then(() => res.status(200).send({message: 'User account created successfully'}))
   .catch((err) => {
-    console.error(err); // Log the error for debugging
+    console.error(err);
+    res.status(500).send({error: 'Server error', details: err.message});
+  });
+})
+
+app.post('/additem', (req, res) => {
+  knex('inventory')
+  .insert(req.body)
+  .then(() => res.status(200).send({message:'Item successfully created'}))
+  .catch((err) => {
+    console.error(err);
     res.status(500).send({error: 'Server error', details: err.message});
   });
 })

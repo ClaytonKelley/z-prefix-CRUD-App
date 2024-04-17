@@ -125,8 +125,7 @@ console.log(newItem)
               <td>{item.id}</td>
               <td>{item.ItemName}</td>
               <td>{item.Description}</td>
-            </tr>
-         )
+            </tr>)
           )}
           </tbody>
           </Table>
