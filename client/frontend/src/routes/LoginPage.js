@@ -1,8 +1,9 @@
 import {useState, useContext} from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import {UserContext} from '../components/UserContext'
 import {useNavigate} from "react-router-dom";
+import {useCookies} from 'react-cookie'
+
 // import Card from 'react-bootstrap/Card';
 // import Container from 'react-bootstrap/Container';
 // import Row from 'react-bootstrap/Row';
@@ -12,7 +13,8 @@ import {useNavigate} from "react-router-dom";
 const LoginPage = () => {
 const [userName, setUserName] = useState('')
 const [userPassword, setUserPassword] = useState('')
-const {userDetails, setUserDetails} = useContext(UserContext)
+const [Cookies, setCookie] = useCookies(['userName', 'UserId', 'FirstName', 'LastName', 'SessionId']);
+
 const [toggleLogin, setToggleLogin] = useState(false)
 const [accountCreation, setAccountCreation] = useState({FirstName: "", LastName: "", UserName: "", Password: ""})
 const navigate = useNavigate();
@@ -29,7 +31,7 @@ const handleLogin = (event) => {
       "Content-Type": "application/json",
     }
   })
-  .then( (response) =>  {
+  .then((response) =>  {
     if (response.status === 200) {
       console.log('goodLogin')
       return response.json()
@@ -37,7 +39,14 @@ const handleLogin = (event) => {
       return Promise.reject({ status: response.status, message: 'Invalid Login Details' });
     }
   })
-  .then((userData) => setUserDetails(userData[0]))
+  .then((userData) => {
+    let user = userData[0];
+    setCookie('userName', user.UserName)
+    setCookie('userId', user.id)
+    setCookie('FirstName', user.FirstName)
+    setCookie('LastName', user.LastName)
+    setCookie('SessionId', 'RandomNumbers')
+  })
   .then(() => navigate('/Items'))
   .catch((error) => {
     console.error('Login failed:', error.message);

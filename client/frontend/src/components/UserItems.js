@@ -1,15 +1,18 @@
 import {useState, useContext, useEffect} from 'react'
-import {UserContext} from './UserContext'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
+import {useCookies} from 'react-cookie'
+import {ItemContext} from './ItemContext'
+import ItemModal from './ItemModal'
 
 const UserItems = () => {
-const {userDetails} = useContext(UserContext)
-const [Items, setItems] = useState([])
-const [toggleItems, SetToggleItems] = useState(false)
-const [newItem, setNewItem] = useState({ userId: userDetails.id, Quantity:'', ItemName:'', Description:''})
-let userId = userDetails.id
+const [items, setItems] = useState([])
+const [toggleItems, setToggleItems] = useState(false)
+const [toggleCreate, setToggleCreate] = useState(false)
+const [cookies] = useCookies(['userId'])
+const {itemDetails, setItemDetails, showItem, setShowItem} = useContext(ItemContext)
+const [newItem, setNewItem] = useState({ userId: cookies.userId, Quantity:'', ItemName:'', Description:''})
 
 
   useEffect(() => {
@@ -21,7 +24,7 @@ let userId = userDetails.id
   }, [toggleItems])
 
 const fetchUserItems = () => {
-    fetch(`http://localhost:8080/Items/${userId}`)
+    fetch(`http://localhost:8080/Items/${cookies.userId}`)
       .then((response) => response.json())
       .then((itemdata) => setItems(itemdata))
   };
@@ -40,7 +43,11 @@ const fetchUserItems = () => {
       headers: {
         "Content-Type": "application/json",
       }
+
     })
+    .then(() => fetchUserItems())
+    .then(() => setToggleItems(true))
+    .then(() => setToggleCreate(false))
   }
 
   const handelItemObj =(event, fieldName) =>{
@@ -50,10 +57,22 @@ const fetchUserItems = () => {
     }));
   }
 
+  const handleItemClick = (item) => {
+    setItemDetails(item);
+    setShowItem(true);
+ };
+
+ const handleCloseModal = () => {
+    setShowItem(false);
+    setItemDetails({});
+ };
+
 console.log(newItem)
 
   return (
     <>
+
+      {toggleCreate ?
       <div className = "createitems">
         <Form className ='createitemform'>
           <Form.Group className="mb-3" controlId="ItemName">
@@ -68,20 +87,27 @@ console.log(newItem)
             <Form.Label>Description</Form.Label>
             <Form.Control type ='Description' as="textarea" rows={4} onChange={(event) => handelItemObj(event, 'Description')} />
           </Form.Group>
-          <Button variant="primary" type="button" onClick = {null}>
+          <Button variant="primary" type="button" onClick = {(event) => saveItem(event)}>
           Create Item
           </Button>
           {' '}
-          <Button variant="primary" type="button" onClick = {null}>
+          <Button variant="primary" type="button" onClick = {() => setToggleCreate(!toggleCreate)}>
           Close
           </Button>
         </Form>
       </div>
+      :
+      <>
+      </>}
 
       {toggleItems ?
       <div id='all-items-box'>
-        <Button variant="primary" type="button" onClick = {() => SetToggleItems(!toggleItems)}>
+        <Button variant="primary" type="button" onClick = {() => setToggleItems(!toggleItems)}>
           See your items
+          </Button>
+          {' '}
+          <Button variant="primary" type="button" onClick = {() => setToggleCreate(!toggleCreate)}>
+          Add an Item
           </Button>
 
           <Table striped bordered hover>
@@ -94,8 +120,8 @@ console.log(newItem)
             </tr>
           </thead>
           <tbody>
-         {Items.map((item, index) => (
-            <tr key = {item.id}>
+         {items.map((item, index) => (
+            <tr key = {item.id} onClick = {() => handleItemClick(item)}>
               <td>{item.Quantity}</td>
               <td>{item.ItemName}</td>
               <td>{item.Description}</td>
@@ -104,11 +130,16 @@ console.log(newItem)
           )}
           </tbody>
           </Table>
+          <ItemModal show={showItem} handleClose={handleCloseModal} item={itemDetails} />
       </div>
       :
       <div id='userItemsbox'>
-        <Button variant="primary" type="button" onClick = {() => SetToggleItems(!toggleItems)}>
+        <Button variant="primary" type="button" onClick = {() => setToggleItems(!toggleItems)}>
           See all Items
+          </Button>
+          {' '}
+          <Button variant="primary" type="button" onClick = {() => setToggleCreate(!toggleCreate)}>
+          Add an Item
           </Button>
         <Table striped bordered hover>
           <thead>
@@ -120,8 +151,8 @@ console.log(newItem)
             </tr>
           </thead>
           <tbody>
-         {Items.map((item, index) => (
-            <tr key = {index}>
+         {items.map((item, index) => (
+            <tr key = {item.id} onClick = {() => handleItemClick(item)}>
               <td>{item.id}</td>
               <td>{item.ItemName}</td>
               <td>{item.Description}</td>
@@ -129,8 +160,9 @@ console.log(newItem)
           )}
           </tbody>
           </Table>
-
+          <ItemModal show={showItem} handleClose={handleCloseModal} item={itemDetails} />
       </div>
+
       }
       </>
   );
