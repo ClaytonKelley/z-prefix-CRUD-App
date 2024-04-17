@@ -4,11 +4,34 @@
   text-align: center;
 }
 
+.login-form{
+  width: 25%;
+  align-self: center;
+  justify-content: center;
+  text-align: left;
+
+}
 .PageBody{
+  background-color: rgb(24, 31, 31);
+  display:flex;
   justify-content: center;
   text-align: center;
+  height: 100vh;
+  margin: 0 auto;
 }
 .accountform{
   text-align: center;
   width:50%
+}
+
+.createitems{
+  display:flex;
+  justify-content: center;
+}
+
+.createitemform{
+  width: 25%;
+  align-self: center;
+
+  text-align: left;
 }

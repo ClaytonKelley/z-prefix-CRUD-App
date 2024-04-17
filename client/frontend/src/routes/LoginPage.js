@@ -74,11 +74,9 @@ const updateAccountCreation = (event, fieldName) => {
   return (
     <div className='PageBody'>
       {toggleLogin ?
-      <div className='login-box'>
-        {/* <Card style={{ width: '50rem' }} > */}
-        <h1>Login</h1>
-        <Form> {/*Loginform*/}
-          <Form.Group className="mb-3" controlId="UserName" >
+      <>
+        <Form className = 'login-form'> {/*Loginform*/}
+          <Form.Group className="mb-3 " controlId="UserName" >
             <Form.Label>UserName</Form.Label>
             <Form.Control type="UserName" placeholder="Enter UserName" onChange={(event) => setUserName(event.target.value)} />
           </Form.Group>
@@ -95,14 +93,10 @@ const updateAccountCreation = (event, fieldName) => {
           Create Account
           </Button>
         </Form>
-       {/* </Card> */}
-
-
-      </div>
+      </>
       :
-      <div className = 'create-account-box'>
-        <h1>Create Account</h1>
-        <Form> {/*Loginform*/}
+      <>
+        <Form className ="login-form"> {/*Create Account Form*/}
           <Form.Group className="mb-3" controlId="FirstName">
               <Form.Label>First Name</Form.Label>
               <Form.Control type="text" placeholder="Enter First Name" onChange={(event) => updateAccountCreation(event, 'FirstName')} />
@@ -129,7 +123,8 @@ const updateAccountCreation = (event, fieldName) => {
               Already have account
           </Button>
         </Form>
-      </div>}
+
+      </>}
     </div>
 
   );
