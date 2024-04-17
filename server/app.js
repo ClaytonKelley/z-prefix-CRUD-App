@@ -27,7 +27,15 @@ app.get('/users', (req, res) => {
     })
 })
 
-app.get('/userItems/:userId', (req, res) => {
+app.get('/Items', (req, res) => {
+  knex('inventory')
+    .select('*')
+    .then((userData) => {
+      res.status(200).send(userData)
+    })
+})
+
+app.get('/Items/:userId', (req, res) => {
   knex('inventory')
     .select('*')
     .where('userId', req.params.userId)

@@ -37,7 +37,7 @@ const handleLogin = (event) => {
       return Promise.reject({ status: response.status, message: 'Invalid Login Details' });
     }
   })
-  .then((userData) => setUserDetails(userData))
+  .then((userData) => setUserDetails(userData[0]))
   .then(() => navigate('/Items'))
   .catch((error) => {
     console.error('Login failed:', error.message);

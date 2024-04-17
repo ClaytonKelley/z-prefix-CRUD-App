@@ -1,32 +1,54 @@
 import {useState, useContext, useEffect} from 'react'
-import {UserContext} from '../components/UserContext'
-import {userDetails} from './UserContext'
+import {UserContext} from './UserContext'
+import Button from 'react-bootstrap/Button';
 
 const UserItems = () => {
-//const {userDetails} = useContext(userDetails)
-const [userItems, setUserItems] = useState([])
+const {userDetails} = useContext(UserContext)
+const [Items, setItems] = useState([])
+
 const [toggleItems, SetToggleItems] = useState(false)
-//let userId = userDetails.id
+let userId = userDetails.id
+console.log('userdeets:', userDetails)
+console.log('userId:', userId)
 
   useEffect(() => {
-    fetchUserItems();
-  }, [])
+    if (!toggleItems) {
+      fetchUserItems();
+    } else {
+      fetchallItems();
+    }
+
+  }, [toggleItems])
 
 const fetchUserItems = () => {
-    fetch(`http://localhost:8080/userItems/1`)
+    fetch(`http://localhost:8080/Items/${userId}`)
       .then((response) => response.json())
-      .then((itemdata) => setUserItems(itemdata))
+      .then((itemdata) => setItems(itemdata))
   };
+
+  const fetchallItems = () => {
+    fetch(`http://localhost:8080/Items`)
+      .then((response) => response.json())
+      .then((itemdata) => setItems(itemdata))
+  }
 
   return (
     <>
+      {toggleItems ?
       <div id='all-items-box'>
-        {userItems.map((item, index) => <p key ={index}>{item.ItemName}</p>)}
+        {Items.map((item, index) => <p key ={index}>{item.ItemName}</p>)}
+        <Button variant="primary" type="button" onClick = {() => SetToggleItems(!toggleItems)}>
+          See your items
+          </Button>
       </div>
-    ------------
+      :
       <div id='userItemsbox'>
-         {userItems.map((item, index) => <p key ={index}>{item.ItemName}</p>)}
+         {Items.map((item, index) => <p key ={index}>{item.ItemName}</p>)}
+         <Button variant="primary" type="button" onClick = {() => SetToggleItems(!toggleItems)}>
+          See all Items
+          </Button>
       </div>
+      }
       </>
   );
 }
