@@ -5,15 +5,16 @@ import Table from 'react-bootstrap/Table';
 import {useCookies} from 'react-cookie'
 import {ItemContext} from './ItemContext'
 import ItemModal from './ItemModal'
+import {useNavigate} from "react-router-dom";
 
 const UserItems = () => {
 const [items, setItems] = useState([])
 const [toggleItems, setToggleItems] = useState(false)
 const [toggleCreate, setToggleCreate] = useState(false)
-const [cookies] = useCookies(['userId'])
+const [cookies, setCookie] = useCookies(['userName', 'UserId', 'FirstName', 'LastName', 'SessionId']);
 const {itemDetails, setItemDetails, showItem, setShowItem} = useContext(ItemContext)
 const [newItem, setNewItem] = useState({ userId: cookies.userId, Quantity:'', ItemName:'', Description:''})
-
+const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -68,6 +69,15 @@ const fetchUserItems = () => {
     setItemDetails({});
  };
 
+ const handleLogout =() =>{
+    setCookie('userName', '', { maxAge: 1 })
+    setCookie('userId', '', { maxAge: 1 })
+    setCookie('FirstName', '', { maxAge: 1 })
+    setCookie('LastName', '', { maxAge: 1 })
+    setCookie('SessionId', '', { maxAge: 1 })
+    navigate('/');
+ }
+
  const shortenText = (text, charLimit) => {
   return text.length > charLimit ? text.substring(0, charLimit) + ' ... ' : text;
  }
@@ -76,7 +86,7 @@ const fetchUserItems = () => {
 
   return (
     <>
-
+      <div ClassName = 'PageBody'></div>
       {toggleCreate ?
       <div className = "createitems">
         <Form className ='createitemform'>
@@ -99,6 +109,7 @@ const fetchUserItems = () => {
           <Button variant="primary" type="button" onClick = {() => setToggleCreate(!toggleCreate)}>
           Close
           </Button>
+
         </Form>
       </div>
       :
@@ -114,6 +125,10 @@ const fetchUserItems = () => {
           <Button variant="primary" type="button" onClick = {() => setToggleCreate(!toggleCreate)}>
           Add an Item
           </Button>
+          <Button variant="primary" type="button" onClick = {() => handleLogout()}>
+          Logout
+          </Button>
+
 
           <Table striped bordered hover>
           <thead>
@@ -145,6 +160,9 @@ const fetchUserItems = () => {
           {' '}
           <Button variant="primary" type="button" onClick = {() => setToggleCreate(!toggleCreate)}>
           Add an Item
+          </Button>
+          <Button variant="primary" type="button" onClick = {() => handleLogout()}>
+          Logout
           </Button>
         <Table striped bordered hover>
           <thead>

@@ -23,3 +23,4 @@ const [cookies] = useCookies(['userId'])
 }
 
 export default ItemsPage;
+

@@ -12,7 +12,7 @@ import {useCookies} from 'react-cookie'
 const LoginPage = () => {
 const [userName, setUserName] = useState('')
 const [userPassword, setUserPassword] = useState('')
-const [Cookies, setCookie] = useCookies(['userName', 'UserId', 'FirstName', 'LastName', 'SessionId']);
+const [cookies, setCookie] = useCookies(['userName', 'UserId', 'FirstName', 'LastName', 'SessionId']);
 
 const [toggleLogin, setToggleLogin] = useState(false)
 const [accountCreation, setAccountCreation] = useState({})
