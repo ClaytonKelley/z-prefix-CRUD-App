@@ -34,3 +34,9 @@
   align-self: center;
   text-align: left;
 }
+
+.modal-body {
+  flex: 1 1 auto;
+  padding: var(--bs-modal-padding);
+  position: relative;
+}

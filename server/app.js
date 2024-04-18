@@ -11,7 +11,7 @@ app.use(morgan(':method :url status::status :response-time ms'))
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-morgan.token('id', (req) => { //creating id token
+morgan.token('id', (req) => {
   return req.id
 })
 
@@ -105,19 +105,6 @@ app.patch('/editItem', (req, res) => {
   });
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.delete('/deleteItem', (req, res) => {
   knex('inventory')
   .where({id:req.body.id, userId:req.body.userId})
@@ -133,11 +120,3 @@ app.listen(PORT, () => {
   console.log(`Knex and Express apps are currently running on port ${PORT}`)
 })
 
-//Dont forget to install the folloeing
-// -express
-// -morgan
-// - knex
-// - pg
-// - dotenv
-// - cors
-// - nodemon

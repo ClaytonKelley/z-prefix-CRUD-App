@@ -5,7 +5,6 @@ import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import {useNavigate} from "react-router-dom";
 import {useCookies} from 'react-cookie'
 
 
@@ -14,7 +13,7 @@ const ItemModal = ({show, handleClose, item, fetchfunc}) => {
   const [toggleEdit, setToggleEdit] = useState(true)
   const [itemObj, setItemObj] = useState(item)
   const [cookies] = useCookies(['userId'])
-  const navigate = useNavigate();
+
 
 
 
@@ -31,10 +30,10 @@ useEffect(() => {
 }, [show])
 
 
-const handelItemObj =(event, fieldName) =>{
+const handelItemObj =(event, key) =>{
   setItemObj(prevState => ({
     ...prevState,
-    [fieldName]: event.target.value
+    [key]: event.target.value
   }));
 }
 
@@ -70,29 +69,35 @@ const deleteitem = (event) => {
   }
 }
 
+
+
   return (
     <>
       <Modal show={show} onHide={handleClose} >
         <Modal.Header >
-        <div className="d-flex justify-content-between w-100">
-          <Modal.Title>Item Details</Modal.Title>
+        <div className="d-flex justify-content-between w-100" >
+          <Modal.Title >Item Details</Modal.Title>
           <div className = 'buttons'>
-          <Button variant="primary" onClick={() => setToggleEdit(!toggleEdit)}>
-            Edit
-          </Button>
+          {cookies.userId ? <>
           {!toggleEdit ? <>
-          {' '}
+
           <Button variant="danger" onClick={deleteitem}>
             Delete
           </Button>
           </>
           : <></>}
+          {' '}
+          <Button variant="primary" onClick={() => setToggleEdit(!toggleEdit)}>
+            Edit
+          </Button>
+          </>
+          : <></>}
           </div>
           </div>
-            </Modal.Header>
+            </Modal.Header >
               <Modal.Body>
                 {toggleEdit ?
-                <Container>
+                <Container >
                   <Row>
                   <Col xs={7}>
                     <Form.Label htmlFor="ItemName">Item Name:</Form.Label>
@@ -123,7 +128,7 @@ const deleteitem = (event) => {
                   <Form.Control id ='Quantity' value ={itemObj.Quantity} placeholder="" onChange = {(event) => handelItemObj(event, 'Quantity')} />
                 </Col>
               </Row>
-                <br/>
+              <br/>
               <Row>
                 <Col>
                 <Form.Label htmlFor="Description">Item Description:</Form.Label>
@@ -133,11 +138,9 @@ const deleteitem = (event) => {
                 </Container>}
               </Modal.Body>
             <Modal.Footer>
-
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-
           {!toggleEdit ? <>
           <Button variant="primary" onClick={updateitem}>
             Save Changes
@@ -145,44 +148,8 @@ const deleteitem = (event) => {
           </>
           :
           <></> }
-
         </Modal.Footer>
       </Modal>
-
-
-
-      {/* <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" rows={4} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
     </>
   );
 }

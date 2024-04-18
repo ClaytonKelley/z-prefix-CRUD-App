@@ -15,6 +15,7 @@ const {itemDetails, setItemDetails, showItem, setShowItem} = useContext(ItemCont
 const [newItem, setNewItem] = useState({ userId: cookies.userId, Quantity:'', ItemName:'', Description:''})
 
 
+
   useEffect(() => {
     if (!toggleItems) {
       fetchUserItems();
@@ -50,10 +51,10 @@ const fetchUserItems = () => {
     .then(() => setToggleCreate(false))
   }
 
-  const handelItemObj =(event, fieldName) =>{
+  const handelItemObj =(event, key) =>{
     setNewItem(prevState => ({
       ...prevState,
-      [fieldName]: event.target.value
+      [key]: event.target.value
     }));
   }
 
@@ -67,7 +68,9 @@ const fetchUserItems = () => {
     setItemDetails({});
  };
 
- const shortenText = (text, charLimit) => text.length > charLimit ? text.substring(0, charLimit) + ' ... ' : text;
+ const shortenText = (text, charLimit) => {
+  return text.length > charLimit ? text.substring(0, charLimit) + ' ... ' : text;
+ }
 
 
 
