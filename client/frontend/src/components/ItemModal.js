@@ -54,6 +54,22 @@ const updateitem = (event) => {
   }
 }
 
+const deleteitem = (event) => {
+  if (itemObj.userId === cookies.userId) {
+    fetch(`http://localhost:8080/deleteItem`, {
+      method: 'DELETE',
+      body: JSON.stringify(itemObj),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    .then(() => handleClose())
+    .then(() => fetchfunc())
+  } else {
+    console.log('user does not have permission')
+  }
+}
+
   return (
     <>
       <Modal show={show} onHide={handleClose} >
@@ -66,7 +82,7 @@ const updateitem = (event) => {
           </Button>
           {!toggleEdit ? <>
           {' '}
-          <Button variant="danger" onClick={updateitem}>
+          <Button variant="danger" onClick={deleteitem}>
             Delete
           </Button>
           </>

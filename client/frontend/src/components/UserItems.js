@@ -67,6 +67,9 @@ const fetchUserItems = () => {
     setItemDetails({});
  };
 
+ const shortenText = (text, charLimit) => text.length > charLimit ? text.substring(0, charLimit) + ' ... ' : text;
+
+
 
   return (
     <>
@@ -123,7 +126,7 @@ const fetchUserItems = () => {
             <tr key = {item.id} onClick = {() => handleItemClick(item)}>
               <td>{item.Quantity}</td>
               <td>{item.ItemName}</td>
-              <td>{item.Description}</td>
+              <td>{shortenText(item.Description, 100)}</td>
             </tr>
          )
           )}
@@ -153,7 +156,7 @@ const fetchUserItems = () => {
             <tr key = {item.id} onClick = {() => handleItemClick(item)}>
               <td>{item.id}</td>
               <td>{item.ItemName}</td>
-              <td>{item.Description}</td>
+              <td>{shortenText(item.Description, 100)}</td>
             </tr>)
           )}
           </tbody>
