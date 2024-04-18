@@ -64,7 +64,7 @@ app.post('/login', (req, res) => {
     if (userData.length > 0) {
       res.status(200).send(userData);
     } else {
-      res.status(400).send('Invalid username or password');
+      res.status(400).send('Invalid username or password.');
     }
   })
   .catch((err) => {
@@ -76,7 +76,7 @@ app.post('/login', (req, res) => {
 app.post('/create-account', (req, res) => {
   knex('users')
   .insert(req.body)
-  .then(() => res.status(200).send({message: 'User account created successfully'}))
+  .then(() => res.status(200).send({message: 'User account created successfully.'}))
   .catch((err) => {
     console.error(err);
     res.status(500).send({error: 'Server error', details: err.message});
@@ -86,7 +86,43 @@ app.post('/create-account', (req, res) => {
 app.post('/additem', (req, res) => {
   knex('inventory')
   .insert(req.body)
-  .then(() => res.status(200).send({message:'Item successfully created'}))
+  .then(() => res.status(200).send({message:'Item successfully created.'}))
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send({error: 'Server error', details: err.message});
+  });
+})
+
+app.patch('/editItem', (req, res) => {
+  const {id, userId, ...updatedFields} = req.body
+  knex('inventory')
+  .where({ id:req.body.id, userId:req.body.userId})
+  .update(updatedFields)
+  .then(() => res.status(200).send({message:'Item successfully updated.'}))
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send({error: 'Server error', details: err.message});
+  });
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.delete('/deleteItem', (req, res) => {
+  knex('inventory')
+  .where({id:req.body.id, userId:req.body.userId})
+  .del()
+  .then(() => res.status(202).send({message:'Item was successfully deleted.'}))
   .catch((err) => {
     console.error(err);
     res.status(500).send({error: 'Server error', details: err.message});

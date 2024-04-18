@@ -67,7 +67,6 @@ const fetchUserItems = () => {
     setItemDetails({});
  };
 
-console.log(newItem)
 
   return (
     <>
@@ -130,7 +129,7 @@ console.log(newItem)
           )}
           </tbody>
           </Table>
-          <ItemModal show={showItem} handleClose={handleCloseModal} item={itemDetails} />
+          <ItemModal show={showItem} fetchfunc={fetchUserItems} handleClose={handleCloseModal} item={itemDetails} />
       </div>
       :
       <div id='userItemsbox'>
@@ -147,7 +146,6 @@ console.log(newItem)
               <th>Quant</th>
               <th>Item Name</th>
               <th>Item Desecription</th>
-
             </tr>
           </thead>
           <tbody>
@@ -160,7 +158,7 @@ console.log(newItem)
           )}
           </tbody>
           </Table>
-          <ItemModal show={showItem} handleClose={handleCloseModal} item={itemDetails} />
+          <ItemModal show={showItem} fetchfunc={fetchUserItems} handleClose={handleCloseModal} item={itemDetails} />
       </div>
 
       }

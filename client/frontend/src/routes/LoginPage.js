@@ -79,7 +79,6 @@ const updateAccountCreation = (event, fieldName) => {
   }));
 };
 
-  console.log(accountCreation)
   return (
     <div className='PageBody'>
       {toggleLogin ?
