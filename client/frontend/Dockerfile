@@ -14,8 +14,9 @@ COPY . /client/frontend
 EXPOSE 3000
 
 # Run this shell command at build time
-RUN npm install
 RUN npm install react-scripts --save
+RUN npm install
+
 
 # Start the application
-CMD npm start .
+CMD npm start
