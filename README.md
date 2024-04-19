@@ -18,7 +18,7 @@ Future features will have this done automatically. Until the please follow the f
 
 ### Navigate into the root directory and run the following command
 
-- `docker compose up`
+- `docker compose up -d`
 
 
 ## Database Seeding
@@ -26,3 +26,6 @@ If you want to initilize the database with dummy data and accounts run the follo
 
 - `knex migrate:latest`
 - `knex seed:run`
+
+
+## login
