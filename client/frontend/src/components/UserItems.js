@@ -48,7 +48,7 @@ const fetchUserItems = () => {
 
     })
     .then(() => fetchUserItems())
-    .then(() => setToggleItems(true))
+    .then(() => setToggleItems(false))
     .then(() => setToggleCreate(false))
   }
 
@@ -86,7 +86,7 @@ const fetchUserItems = () => {
 
   return (
     <>
-      <div ClassName = 'PageBody'></div>
+      {/* <div className = 'PageBody'></div> */}
       {toggleCreate ?
       <div className = "createitems">
         <Form className ='createitemform'>

@@ -15,7 +15,7 @@ EXPOSE 3000
 
 # Run this shell command at build time
 RUN npm install
-
+RUN npm install react-scripts --save
 
 # Start the application
-CMD npm start
+CMD npm start .
