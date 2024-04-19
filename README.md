@@ -46,6 +46,7 @@ If you want to initilize the database with dummy data and accounts run the follo
 - $\textcolor{red}{\textsf{See all Items}}$ - Click this to see all itmes created by everyone.
 - $\textcolor{yellow}{\textsf{Add an Item}}$ - Click this to add an Item view
 - $\textcolor{violet}{\textsf{Logout}}$ - If you dont have a Account click this to create one.
+
 ![Alt text](Readmeimgs/useritems.png?raw=true)
 
 ## Add Item
